@@ -1,45 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node{
+ struct node{
   int data;
   struct node* next;
-}node;
-
-node* head=NULL;
+};
 
 
-void displayList();
-void insertAtEnd(int value);
+struct node* createList();
+void displayList(struct node* head);
+void insertAtEnd(struct node** head,int value);
 
 int main(){
-  insertAtEnd(3);
-  insertAtEnd(31);
-  insertAtEnd(2);
-  displayList();
+  struct node* head=createList();
+  insertAtEnd(&head,3);
+  insertAtEnd(&head,31);
+  insertAtEnd(&head,2);
+  displayList(head);
 }
 
-void displayList(){
-  while(head!=NULL){
-    printf("%d ",head->data);
-    head=head->next;
-  }
+struct node* createList(){
+  struct node* head=NULL;
+  return head;
 }
 
-void insertAtEnd(int value){
+void displayList(struct node* head){
   if(head==NULL){
-    head=realloc(head,sizeof(node));
-    head->data=value;
-    head->next=NULL;
+    printf("Empty List\n");
     return;
   }
-  while(head->next!=NULL){
-    head=head->next;
+  struct node* temp=head;
+  while(temp->next!=NULL){
+    printf("%i ",temp->data);
+    temp=temp->next;
   }
-  node* newNode=malloc(sizeof(node));
+}
+
+void insertAtEnd(struct node** head,int value){
+  if(*head==NULL){
+    struct node* newNode=malloc(sizeof(struct node));
+    newNode->data=value;
+    newNode->next=NULL;
+    *head=newNode;
+    return;
+  }
+  struct node* temp=*head;
+  while(temp->next!=NULL){
+    temp=temp->next;
+  }
+  struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
   newNode->next=NULL;
-  head->next=newNode;
+  temp->next=newNode;
   return;
 }
 
