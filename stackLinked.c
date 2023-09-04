@@ -8,12 +8,12 @@
 };
 typedef struct node node ;
 
-void displayStack(struct node* head);
-void pushStack(struct node** head,int value);
-void popStack(struct node** head);
+void displayStack(struct node* top);
+void pushStack(struct node** top,int value);
+void popStack(struct node** top);
 
 int main(){
-  struct node* head=NULL;
+  struct node* top=NULL;
   printf("Stack implementation using Node\n");
 
   while(1){
@@ -25,20 +25,20 @@ int main(){
   scanf("%d",&choice);
   switch (choice ) {
     case 1:{
-      displayStack(head);
+      displayStack(top);
       break;
     }
     case 2:{
       printf("Enter your value to be pushed: ");
       int value;
       scanf("%d",&value);
-      pushStack(&head,value);
+      pushStack(&top,value);
       printf("Pushing the value\n");
       break;
     }
     case 3:{
       printf("Popping  Last Element..\n");
-      popStack(&head);
+      popStack(&top);
       break;
     }
     case 4:{
@@ -56,30 +56,30 @@ int main(){
 }
 
 
-void displayStack(struct node* head){
-  if(head==NULL){
+void displayStack(struct node* top){
+  if(top==NULL){
     printf("Empty Stack\n");
     return;
   }
-  struct node* temp=head;
+  struct node* temp=top;
   while(temp!=NULL){
     printf("%d ",temp->data);
     temp=temp->next;
   }
   printf("\n");
 }
-void pushStack(struct node** head,int value){
+void pushStack(struct node** top,int value){
   struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
-  newNode->next=*head;
-  *head=newNode;
+  newNode->next=*top;
+  *top=newNode;
 }
-void popStack(struct node** head){
-  if(*head==NULL){
+void popStack(struct node** top){
+  if(*top==NULL){
     printf("Stack Underflow\n");
     return;
   }
-  node* temp=*head;
-  (*head)=(*head)->next;
+  node* temp=*top;
+  (*top)=(*top)->next;
   free(temp);
 }
