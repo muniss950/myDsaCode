@@ -68,15 +68,14 @@ void insertAtFront(struct node** head,int value){
 }
 void reverseList(node **head){
   node* current=*head;
-  node* next;
   node* prev=NULL;
   while(current!=NULL){
-    next=current->next;
-    current->next=prev;
-    prev=current; 
-    current=next;
+    prev=current->prev;
+    current->prev =current->next;
+    current->next=prev; 
+    current=current->prev;
   }
-  *head=prev;
+  *head=prev->prev;
   return;
 }
 void bubbleSortList(struct node **head){
