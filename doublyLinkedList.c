@@ -1,10 +1,11 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 
- struct node{
+struct node{
   int data;
   struct node* next;
+  struct node* prev;
 };
 typedef struct node node ;
 
@@ -13,6 +14,7 @@ void insertAtEnd(struct node** head,int value);
 void insertAtFront(struct node** head,int value);
 void bubbleSortList(struct node **head);
 void reverseList(node** head);
+
 int main(){
   struct node* head=NULL;
   insertAtEnd(&head,2);
@@ -47,6 +49,7 @@ void insertAtEnd(struct node** head,int value){
     *head=malloc((sizeof(struct node)));
     (*head)->data=value;
     (*head)->next=NULL;
+    (*head)->prev=NULL;
     return;
   }
   struct node* temp=*head;
@@ -56,6 +59,7 @@ void insertAtEnd(struct node** head,int value){
   struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
   newNode->next=NULL;
+  newNode->prev=temp;
   temp->next=newNode;
   // displayList(head);
   return;
@@ -64,6 +68,8 @@ void insertAtFront(struct node** head,int value){
   struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
   newNode->next=*head;
+  newNode->prev=NULL;
+  (*head)->prev=newNode;
   *head=newNode;
 }
 void reverseList(node **head){
@@ -73,6 +79,7 @@ void reverseList(node **head){
     while (current != NULL) {
         next = current->next;
         current->next = prev;
+        current->prev=next;
         prev = current;
         current = next;
     }
