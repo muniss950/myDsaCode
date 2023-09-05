@@ -6,16 +6,24 @@ typedef struct node{
 }N;
 
 void displayList(N* last);
-N* createList(int value);
-N* insertAtEnd(N** last,int value);
+void  createList(int value);
+void  insertAtEnd(N** last,int value);
 void  insertAtFront(N** last,int value);
-N* insertAtPos(N** last,int value,int pos);
-N* deleteAtEnd(N** last);
-N* deleteAtFront(N** last);
+void  insertAtPos(N** last,int value,int pos);
+void  deleteAtEnd(N** last);
+void  deleteAtFront(N** last);
 N* deleteAtPos(N** last,int pos);
 
 int main(){
-
+  N* last=NULL;
+  insertAtFront(&last, 3);
+  insertAtFront(&last, 1);
+  insertAtFront(&last, 32);
+  insertAtFront(&last, 34);
+  insertAtFront(&last, 34);
+  displayList(last);
+  printf("\n");
+  displayList(last);
 }
 
 void displayList(N* last){
@@ -46,4 +54,20 @@ void  insertAtFront(N** last,int value){
     (*last)->next=temp;   
   }
 
+}
+void insertAtEnd(N** last,int value){
+  if(*last==NULL){
+    N* temp=malloc(sizeof(N));
+    temp->data=value;
+    temp->next=temp;
+    *last=temp;
+    return;
+  }
+  else{
+    N* temp=malloc(sizeof(N));
+    temp->data=value;
+    temp->next=(*last)->next;
+    *last=temp;
+    
+  }  
 }
