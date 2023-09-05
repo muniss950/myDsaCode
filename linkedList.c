@@ -2,12 +2,12 @@
 #include <stdlib.h>
 
 
- struct node{
+struct node{
   int data;
   struct node* next;
 };
 typedef struct node node ;
-
+int checkEmpty(struct node**head);
 void displayList(struct node* head);
 void insertAtEnd(struct node** head,int value);
 void insertAtFront(struct node** head,int value);
@@ -17,23 +17,29 @@ void reverseList(node** head);
 void deleteAtFront(struct node** head);
 void deleteAtEnd(struct node** head);
 void deleteAtPos(struct node** head,int pos);
+
 int main(){
   struct node* head=NULL;
   insertAtEnd(&head,2);
   insertAtEnd(&head,3);
-  insertAtFront(&head,4);
-  insertAtFront(&head,5);
-  insertAtFront(&head,5);
+  deleteAtEnd(&head);
   displayList(head);
-  // bubbleSortList(&head);
-  // displayList(head);
-  reverseList(&head);
+  deleteAtEnd(&head);
   displayList(head);
+  deleteAtEnd(&head);
+  displayList(head);
+}
+
+int checkEmpty(struct node**head){
+  if(*head==NULL){
+    return 1;
+  }
+  else return 0;
 }
 
 
 void displayList(struct node* head){
-  if(head==NULL){
+  if(checkEmpty(&head)){
     printf("Empty List\n");
     return;
   }
@@ -103,4 +109,30 @@ void bubbleSortList(struct node **head){
     temp=start;
   }
   return;
+}
+
+void deleteAtFront(struct node** head){
+  if(checkEmpty(head)){
+    printf("Empty List");
+    return;
+  }
+  node* temp=*head;
+  *head=(*head)->next;
+  free(temp);
+}
+void deleteAtEnd(struct node** head){
+  if(checkEmpty(head)){
+    printf("Empty List ");
+    return;
+  }
+  node* temp=*head;
+  node* prev=NULL;
+  while(temp->next!=NULL){
+    prev=temp;
+    temp=temp->next;
+  }
+  if(prev!=NULL){
+    prev->next=NULL;
+  }
+  free(temp);
 }

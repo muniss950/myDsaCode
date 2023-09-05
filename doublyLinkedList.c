@@ -12,9 +12,12 @@ typedef struct node node ;
 void displayList(struct node* head);
 void insertAtEnd(struct node** head,int value);
 void insertAtFront(struct node** head,int value);
+void insertAtPos(struct node** head,int value,int pos);
 void bubbleSortList(struct node **head);
 void reverseList(node** head);
-
+void deleteAtFront(struct node** head);
+void deleteAtEnd(struct node** head);
+void deleteAtPos(struct node** head,int pos);
 int main(){
   struct node* head=NULL;
   insertAtEnd(&head,2);
