@@ -4,22 +4,31 @@
 #include <string.h>
 
 struct node{
+  int top;
   int data;
   struct node* next;
 };
 typedef struct node node ;
 
+int isEmpty(struct node** top);
 void displayStack(struct node* top);
 void pushStack(struct node** top,int value);
 int popStack(struct node** top);
+int peekStack(struct node** top);
 int precedence(char operator);
 int checkOperand(char operch);
 int match(char a,char b);
 int infixToPostFix(char* expression);
 int main(){
+char expression[] = "((p+(q*r))-s)"; 
+    infixToPostFix(expression); 
+    return 0; 
 
 }
 
+int isEmpty(struct node** top){
+  return ((*top)==NULL);
+}
 
 int precedence(char operator){
   switch (operator) {
@@ -64,6 +73,11 @@ int popStack(struct node** top){
     printf("Stack Underflow\n");
     return -1;
   }
+  if((*top)->next==NULL){
+    int data=(*top)->data;
+    free(*top);
+    return data;
+  }   
   node* temp=*top;
   (*top)=(*top)->next;
   int data=temp->data;
@@ -71,7 +85,10 @@ int popStack(struct node** top){
   return data;
 }
 
-int checkOperand(char operch){
+int peekStack(struct node** top){
+  return (*top)->data;
+}
+int checkIfOperand(char operch){
   return (operch>='a'&& operch<='z'||operch>='A'&&operch<='B');
 }
 
@@ -88,6 +105,33 @@ int match(char a,char b){
 }
 
 int infixToPostFix(char* expression){
-  int size=strlen(expression);
+  int i, j;
+    struct node* top;
+    for (i = 0, j = -1; expression[i]; ++i)
+    { 
+      if (checkIfOperand(expression[i])) 
+            expression[++j] = expression[i];
+      else if (expression[i] == '(')
+            pushStack(&top, expression[i]);
+      else if (expression[i] == ')') 
+        { 
+            while (!isEmpty(&top) && peekStack(&top) != '(')
+                expression[++j] = popStack(&top); 
+            if (!isEmpty(&top) && peekStack(&top) != '(') 
+                return -1; 
+            else
+                popStack(&top); 
+        } 
+      else 
+        { 
+            while (!isEmpty(&top) && precedence(expression[i]) <= precedence(peekStack(&top))) 
+                expression[++j] = popStack(&top); 
+            pushStack(&top, expression[i]); 
+        } 
+    } 
+     while (!isEmpty(&top)) 
+        expression[++j] = popStack(&top); 
+    expression[++j] = '\0'; 
+    printf( "%s", expression);
 
 }
