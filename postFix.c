@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node{
   int data;
@@ -12,7 +13,9 @@ void displayStack(struct node* top);
 void pushStack(struct node** top,int value);
 int popStack(struct node** top);
 int precedence(char operator);
-
+int checkOperand(char operch);
+int match(char a,char b);
+int infixToPostFix(char* expression);
 int main(){
 
 }
@@ -20,32 +23,18 @@ int main(){
 
 int precedence(char operator){
   switch (operator) {
-    case ')':{
-      return 4;
-      break;
-    }
     case '^':{
       return 3;
       break;
     }
-    case ('*'):{
-      return 2;
-      break;
-    }
+    case ('*'):
     case ('/'):{
       return 2;
       break;
     }
-    case '+':{
-      return 1;
-      break;
-    }
+    case '+':
     case '-':{
       return 1;
-      break;
-    }
-    case '(':{
-      return 0;
       break;
     }
     default:
@@ -80,4 +69,25 @@ int popStack(struct node** top){
   int data=temp->data;
   free(temp);
   return data;
+}
+
+int checkOperand(char operch){
+  return (operch>='a'&& operch<='z'||operch>='A'&&operch<='B');
+}
+
+int match(char a,char b){
+  if(a=='('&& b==')'){
+    return 1;
+  }else if(a=='['&& b==']'){
+      return 1;
+  }else if(a=='{'&& b=='}' ){
+        return 1;
+  }else{
+    return 1;
+  }
+}
+
+int infixToPostFix(char* expression){
+  int size=strlen(expression);
+
 }
