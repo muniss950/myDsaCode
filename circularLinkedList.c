@@ -17,11 +17,16 @@ N* deleteAtPos(N** last,int pos);
 int main(){
   N* last=NULL;
   insertAtFront(&last, 3);
-  // displayList(last);
+  insertAtFront(&last, 3);
+  insertAtFront(&last, 3);
+  displayList(last);
+  printf("\n");
   deleteAtFront(&last);
+  displayList(last);
+  printf("\n");
   deleteAtFront(&last);
-  // printf("\n");
-  // displayList(last);
+  printf("\n");
+  displayList(last);
 }
 
 void displayList(N* last){
@@ -74,6 +79,10 @@ void insertAtEnd(N** last,int value){
 void  deleteAtFront(N** last){
   if(*last==NULL){
     printf("Empty List ");
+    return;
+  }
+  if(*last==(*last)->next){
+    free(*last);
     return;
   }
   N* temp=(*last)->next;
