@@ -6,44 +6,132 @@ struct node{
   int data;
   struct node* next;
 };
+struct head{
+  struct node* next;
+};
 typedef struct node node ;
-int checkEmpty(struct node**head);
-void displayList(struct node* head);
-void insertAtEnd(struct node** head,int value);
-void insertAtFront(struct node** head,int value);
-void insertAtPos(struct node** head,int value,int pos);
-void bubbleSortList(struct node **head);
-void reverseList(node** head);
-void deleteAtFront(struct node** head);
-void deleteAtEnd(struct node** head);
-void deleteAtPos(struct node** head,int pos);
+typedef struct head head ;
+int checkEmpty(head**head);
+void displayList(head* head);
+void insertAtEnd(head** head,int value);
+void insertAtFront(head** head,int value);
+void insertAtPos(head** head,int value,int pos);
+void bubbleSortList(head **head);
+void reverseList(head** head);
+void deleteAtFront(head** head);
+void deleteAtEnd(head** head);
+void deleteAtPos(head** head,int pos);
 
 int main(){
-  struct node* head=NULL;
-  insertAtEnd(&head,2);
-  insertAtEnd(&head,3);
-  deleteAtEnd(&head);
-  displayList(head);
-  deleteAtEnd(&head);
-  displayList(head);
-  deleteAtEnd(&head);
-  displayList(head);
+  head *head=NULL;
+  while(1){
+      printf("-----------------------\n");
+  printf("Linked List Implementation\n");
+  printf("1.Display\n2.CheckEmpty\n3.InsertAtEnd\n4.InsertAtFront\n5.InsertAtPos\n");
+  printf("6.DeleteAtEnd\n7.DeleteAtFront\n8.deleteAtPos\n9.BubbleSortList\n10.Exit");
+  printf("-----------------------\n");
+  printf("Give your Choice: ");
+  int choice;
+  scanf("%d",&choice);
+  switch (choice ) {
+    case 1:{
+      displayList(head);
+      break;
+    }
+    case 2:{
+        if(checkEmpty(&head)){
+          printf("The list is empty");
+        }
+        else{
+          printf("The list is not empty");
+        }
+        break;
+      }
+    case 3:{
+      printf("Enter your value to be pushed: ");
+      int value;
+      scanf("%d",&value);
+      insertAtEnd(&head,value);
+      printf("Pushing the value\n");
+      break;
+    }
+    case 4:{
+      printf("Enter your value to be pushed: ");
+      int value;
+      scanf("%d",&value);
+      insertAtFront(&head,value);
+      printf("Pushing the value\n");
+      break;
+
+      }
+    case 5:{
+      printf("Enter your value to be pushed: ");
+      int value;
+      scanf("%d",&value);
+      printf("Enter position: ");
+      int pos;
+      scanf("%d",&pos);
+      insertAtPos(&head,value,pos);
+      printf("Pushing the value\n");
+      break;
+        
+      }
+
+
+    case 6:{
+      printf("Deleting  Last Element..\n");
+      deleteAtEnd(&head);
+      break;
+    }
+    case 7:{
+      printf("Deleting  Front Element..\n");
+      deleteAtFront(&head);
+      break;
+
+    }
+    case 8:{
+      printf("Enter position: ");
+      int pos;
+      scanf("%d",&pos);
+      deleteAtPos(&head,pos);
+      printf("Pushing the value\n");
+      break;
+
+      }
+    case 9:{
+      printf("Bubble sorting list...");
+      bubbleSortList(&head);
+      break;
+      }
+    case 10:{
+        goto exitLoop;
+        break;
+
+      }
+    default:{
+      printf("Enter valid choice: \n");
+    }
+  }
+
+  }
+  exitLoop:;
 }
 
-int checkEmpty(struct node**head){
-  if(*head==NULL){
+int checkEmpty(head**head){
+  if((*head)==NULL ||(*head)->next==NULL){
+
     return 1;
   }
   else return 0;
 }
 
 
-void displayList(struct node* head){
+void displayList(head* head){
   if(checkEmpty(&head)){
     printf("Empty List\n");
     return;
   }
-  struct node* temp=head;
+  struct node* temp=head->next;
   while(temp!=NULL){
     printf("%d ",temp->data);
     temp=temp->next;
@@ -51,15 +139,18 @@ void displayList(struct node* head){
   printf("\n");
 }
 
-void insertAtEnd(struct node** head,int value){
-  if(*head==NULL){
+void insertAtEnd(head** head,int value){
+  if(checkEmpty(head)){
     // printf("lol");
-    *head=malloc((sizeof(struct node)));
-    (*head)->data=value;
-    (*head)->next=NULL;
+    *head=malloc(sizeof(struct head));
+    node* newNode;
+    newNode=malloc((sizeof(struct node)));
+    (newNode)->data=value;
+    (newNode)->next=NULL;
+    (*head)->next=newNode;
     return;
   }
-  struct node* temp=*head;
+  struct node* temp=(*head)->next;
   while(temp->next!=NULL){
     temp=temp->next;
   }
@@ -70,15 +161,16 @@ void insertAtEnd(struct node** head,int value){
   // displayList(head);
   return;
 }
-void insertAtFront(struct node** head,int value){
+void insertAtFront(head** head,int value){
   struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
-  newNode->next=*head;
-  *head=newNode;
+  newNode->next=(*head)->next;
+  (*head)->next=newNode;
 }
-void reverseList(node **head){
+void reverseList(head **head){
+    
     node* prev = NULL;
-    node* current = *head;
+    node* current = (*head)->next;
     node* next = NULL;
     while (current != NULL) {
         next = current->next;
@@ -86,14 +178,14 @@ void reverseList(node **head){
         prev = current;
         current = next;
     }
-    *head = prev;
+    (*head)->next = prev;
 }
-void bubbleSortList(struct node **head){
+void bubbleSortList(head **head){
   if(*head==NULL){
     return;
   }  
-  node* start=*head;
-  node* temp=*head;
+  node* start=(*head)->next;
+  node* temp=(*head)->next;
   while(start->next!=NULL){
     while(temp!=NULL){
       int nowData=temp->data;
@@ -111,21 +203,21 @@ void bubbleSortList(struct node **head){
   return;
 }
 
-void deleteAtFront(struct node** head){
+void deleteAtFront(head** head){
   if(checkEmpty(head)){
     printf("Empty List");
     return;
   }
-  node* temp=*head;
-  *head=(*head)->next;
+  node* temp=(*head)->next;
+  (*head)->next=(*head)->next->next;
   free(temp);
 }
-void deleteAtEnd(struct node** head){
+void deleteAtEnd(head** head){
   if(checkEmpty(head)){
     printf("Empty List ");
     return;
   }
-  node* temp=*head;
+  node* temp=(*head)->next;
   node* prev=NULL;
   while(temp->next!=NULL){
     prev=temp;
@@ -134,5 +226,14 @@ void deleteAtEnd(struct node** head){
   if(prev!=NULL){
     prev->next=NULL;
   }
+  if((*head)->next==(temp)){
+    (*head)->next=NULL;
+  }
   free(temp);
+}
+void insertAtPos(head** head,int value,int pos){
+  return;
+}
+void deleteAtPos(head** head,int pos){
+  return;
 }
