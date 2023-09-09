@@ -25,6 +25,7 @@ void deleteAtPos(head** head,int pos);
 int main(){
   head *head=NULL;
   while(1){
+    system("clear");
       printf("-----------------------\n");
   printf("Linked List Implementation\n");
   printf("1.Display\n2.CheckEmpty\n3.InsertAtEnd\n4.InsertAtFront\n5.InsertAtPos\n");
@@ -112,6 +113,10 @@ int main(){
       printf("Enter valid choice: \n");
     }
   }
+    
+  char stop;
+      printf("Press any key to continue...");
+      scanf(" %c",&stop);
 
   }
   exitLoop:;
