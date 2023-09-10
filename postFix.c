@@ -1,55 +1,69 @@
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
-
+#define MAX 1000
 struct node{
-  int top;
-  int data;
+  char data;
   struct node* next;
 };
 typedef struct node node ;
 
-int isEmpty(struct node** top);
 void displayStack(struct node* top);
-void pushStack(struct node** top,int value);
-int popStack(struct node** top);
-int peekStack(struct node** top);
-int precedence(char operator);
-int checkOperand(char operch);
-int match(char a,char b);
-int infixToPostFix(char* expression);
+void pushStack(struct node** top,char value);
+void popStack(struct node** top);
+int peepStack(struct node** top);
+int precedence(char ch);
+void infixToPrefix(char* expression);
+bool checkIfOperand(char ch);
+bool greaterPrecedence(char a,char b);
 int main(){
-char expression[] = "((p+(q*r))-s)"; 
-    infixToPostFix(expression); 
-    return 0; 
+  struct node* top=NULL;
+  printf("Infix conversions using stack\n");
 
-}
-
-int isEmpty(struct node** top){
-  return ((*top)==NULL);
-}
-
-int precedence(char operator){
-  switch (operator) {
-    case '^':{
-      return 3;
+  while(1){
+    system("clear");
+      printf("-----------------------\n");
+  printf("1.Postfix\n2.Prefix\n3.Exit");
+  printf("-----------------------\n");
+  printf("Give your Choice: ");
+  int choice;
+  scanf("%d",&choice);
+  switch (choice ) {
+    case 1:{
+      printf("Enter your expression to be converted: ");
+      char exp[MAX];
+      scanf("%s",exp);
+      printf("test");
+      infixToPrefix(exp);
       break;
     }
-    case ('*'):
-    case ('/'):{
-      return 2;
+    case 2:{
+      printf("Enter your value to be pushed: ");
+      int value;
+      scanf("%d",&value);
+      pushStack(&top,value);
+      printf("Pushing the value\n");
       break;
     }
-    case '+':
-    case '-':{
-      return 1;
-      break;
+    case 3:{
+        goto exitLoop;
+        break;
+
+      }
+    default:{
+      printf("Enter valid choice: \n");
     }
-    default:
-      return -1;
-  };
+  }
+  
+  char stop;
+      printf("Press any key+Enter to continue...");
+      scanf(" %c",&stop);
+  }
+  exitLoop:;
 }
+
+
 void displayStack(struct node* top){
   if(top==NULL){
     printf("Empty Stack\n");
@@ -62,76 +76,90 @@ void displayStack(struct node* top){
   }
   printf("\n");
 }
-void pushStack(struct node** top,int value){
+void pushStack(struct node** top,char value){
   struct node* newNode=malloc(sizeof(struct node));
   newNode->data=value;
   newNode->next=*top;
   *top=newNode;
 }
-int popStack(struct node** top){
+void popStack(struct node** top){
   if(*top==NULL){
     printf("Stack Underflow\n");
-    return -1;
+    return;
   }
-  if((*top)->next==NULL){
-    int data=(*top)->data;
-    free(*top);
-    return data;
-  }   
   node* temp=*top;
   (*top)=(*top)->next;
-  int data=temp->data;
   free(temp);
-  return data;
 }
 
-int peekStack(struct node** top){
-  return (*top)->data;
-}
-int checkIfOperand(char operch){
-  return (operch>='a'&& operch<='z'||operch>='A'&&operch<='B');
-}
 
-int match(char a,char b){
-  if(a=='('&& b==')'){
-    return 1;
-  }else if(a=='['&& b==']'){
-      return 1;
-  }else if(a=='{'&& b=='}' ){
-        return 1;
-  }else{
-    return 1;
+int peepStack(struct node** top){
+  if((*top)==NULL){
+    return -1;
+  }
+  else{
+    return (*top)->data;
   }
 }
+int precedence(char ch){
+  switch (ch) {
+    case '+':
+    case '-':
+      return 1;
+      break;
+    case '*':
+    case '/':
+      return 2;
+      break;
+    case ')':
+    case ']':
+    case '}':
+      return 3;
+      break;
+    case '(':
+    case '{':
+    case '[':
+      return 0;
+      break;
+    default:
+      return -1;
+      break;
+  
+  }
+}
+bool greaterPrecedence(char a,char b){
+  return (precedence(a)>precedence(b));
+}
+bool checkIfOperand(char ch){
+  return (ch>='0' && ch<='9'|| ch>='a' && ch<='z'|| ch>='A' &&ch<='Z');
+}
 
-int infixToPostFix(char* expression){
-  int i, j;
-    struct node* top;
-    for (i = 0, j = -1; expression[i]; ++i)
-    { 
-      if (checkIfOperand(expression[i])) 
-            expression[++j] = expression[i];
-      else if (expression[i] == '(')
-            pushStack(&top, expression[i]);
-      else if (expression[i] == ')') 
-        { 
-            while (!isEmpty(&top) && peekStack(&top) != '(')
-                expression[++j] = popStack(&top); 
-            if (!isEmpty(&top) && peekStack(&top) != '(') 
-                return -1; 
-            else
-                popStack(&top); 
-        } 
-      else 
-        { 
-            while (!isEmpty(&top) && precedence(expression[i]) <= precedence(peekStack(&top))) 
-                expression[++j] = popStack(&top); 
-            pushStack(&top, expression[i]); 
-        } 
-    } 
-     while (!isEmpty(&top)) 
-        expression[++j] = popStack(&top); 
-    expression[++j] = '\0'; 
-    printf( "%s", expression);
-
+void infixToPrefix(char* exp){
+  struct node* top=NULL;
+  char postStr[MAX];
+  int j=0; // index for poststr
+  int size=strlen(exp);
+  for(int i=0;i<size;i++){
+    if(checkIfOperand(exp[i])){
+      postStr[j++]=exp[i];
+    }
+    else{
+      while(greaterPrecedence(peepStack(&top),exp[i])&& peepStack(&top)!='('){
+        if(peepStack(&top)!=')')
+        postStr[j++]=peepStack(&top);
+        popStack(&top);
+      } 
+      if(peepStack(&top)!=')')
+      pushStack(&top,exp[i]);
+    }
+  }
+  while(top!=NULL){
+    if(peepStack(&top)!=')' && peepStack(&top)!='('){
+      postStr[j++]=peepStack(&top);
+    }
+      popStack(&top);
+  }
+  postStr[j]='\0';
+  printf("%s",postStr);
+  return;
 }
