@@ -11,14 +11,15 @@ typedef struct node node ;
 void displayStack(struct node* top);
 void pushStack(struct node** top,int value);
 void popStack(struct node** top);
-
+int peepStack(struct node** top);
 int main(){
   struct node* top=NULL;
   printf("Stack implementation using Node\n");
 
   while(1){
+    system("clear");
       printf("-----------------------\n");
-  printf("1.Display\n2.Push\n3.Pop\n4.Exit");
+  printf("1.Display\n2.Push\n3.Pop\n4.Peep\n5.Exit");
   printf("-----------------------\n");
   printf("Give your Choice: ");
   int choice;
@@ -42,6 +43,12 @@ int main(){
       break;
     }
     case 4:{
+        printf("Peeping stack..\n");
+        printf("%d\n",peepStack(&top));
+        break;
+      }
+
+    case 5:{
         goto exitLoop;
         break;
 
@@ -50,7 +57,10 @@ int main(){
       printf("Enter valid choice: \n");
     }
   }
-
+  
+  char stop;
+      printf("Press any key+Enter to continue...");
+      scanf(" %c",&stop);
   }
   exitLoop:;
 }
@@ -82,4 +92,11 @@ void popStack(struct node** top){
   node* temp=*top;
   (*top)=(*top)->next;
   free(temp);
+}
+int peepStack(struct node** top){
+  if((*top)==NULL){
+    printf("Empty Stack");
+    return -1;
+  }
+  return (*top)->data;
 }

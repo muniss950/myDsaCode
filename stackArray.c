@@ -10,6 +10,7 @@ void popStack();
 
 int main(){
   while(1){
+    system("clear");
       printf("-----------------------\n");
   printf("Stack implementation using array\n");
   printf("1.Display\n2.Push\n3.Pop\n4.Exit");
@@ -44,6 +45,9 @@ int main(){
       printf("Enter valid choice: \n");
     }
   }
+  char stop;
+      printf("Press any key to continue...");
+      scanf(" %c",&stop);
 
   }
   exitLoop:;
