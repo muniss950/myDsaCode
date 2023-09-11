@@ -17,6 +17,7 @@ queue* createQueue();
 void insert(queue** q,int value);
 int removeElem(queue** q);
 void display(queue* q);
+bool isEmpty(queue*q);
 int main(){
 
   queue* q=createQueue();
@@ -24,7 +25,7 @@ int main(){
     system("clear");
       printf("Simple Queue implementation using Array \n");
       printf("-----------------------\n");
-  printf("1.Display\n2.Insert\n3.Remove\n4.Exit");
+  printf("1.Display\n2.Insert\n3.Remove\n4.isEmpty\n5.Exit");
   printf("-----------------------\n");
   printf("Give your Choice: ");
   int choice;
@@ -49,6 +50,10 @@ int main(){
       break;
     }
     case 4:{
+        isEmpty(q);
+        break;
+      }
+    case 5:{
         goto exitLoop;
         break;
 
@@ -109,4 +114,12 @@ void display(queue* q){
   }
   printf("\n");
   return;
+}
+bool isEmpty(queue*q){
+  if((q)->front==NULL){
+    printf("Queue is Empty\n");
+    return true;
+  }
+  printf("Queue is not Empty\n");
+  return false;
 }
