@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX 1000
+#define MAX 100
 
 typedef struct queue{
   int array[MAX];
@@ -20,7 +20,7 @@ int main(){
   queue* q=createQueue();
   while(1){
     system("clear");
-      printf("Simple Queue implementation using Struct \n");
+      printf("Simple Queue implementation using Array \n");
       printf("-----------------------\n");
   printf("1.Display\n2.Insert\n3.Remove\n4.Empty\n5.Exit");
   printf("-----------------------\n");
