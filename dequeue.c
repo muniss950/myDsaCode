@@ -145,10 +145,6 @@ void removeFront(dequeue** q){
     printf("Queue underflow\n");
     return;
   }
-  if((*q)->rear==(*q)->front){
-    (*q)->rear=(*q)->front=NULL;
-    return;
-  }
   node* temp=(*q)->front;
   (*q)->front=(*q)->front->next;
   temp=NULL;
@@ -161,10 +157,13 @@ void display(dequeue* q){
     return;
   }
   node *temp=(q)->front;
-  do{
-    printf("%d ",temp->data);
+  // do{
+  printf("%d ",temp->data);
+  while(temp!=q->rear){
     temp=temp->next;
-  }while(temp!=(q)->rear);
+    printf("%d ",temp->data);
+  }
+    
   printf("\n");
   return;
 }
