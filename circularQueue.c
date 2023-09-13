@@ -1,44 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define MAXQUEUE 100
-struct queue
+#define MAXQUEUE 10
+typedef struct queue
 {
  int item[MAXQUEUE];
   int  front,rear;
-};
+}queue;
 struct queue* createQueue();
-int qinsert(struct queue *q, int x,int size);
+void enqueue(struct queue *q, int x);
 bool isFull(struct queue *q);
+void display(queue *q);
+void dequeue(struct queue *q);
 int main(){
+  queue* q=createQueue();
+  while(1){
+    system("clear");
+      printf("Double Ended Queue implementation using doubly linked list \n");
+      printf("-----------------------\n");
+  printf("1.Display\n2.Enqueue\n3.Dequeue\n4.Exit\n");
+  printf("-----------------------\n");
+  printf("Give your Choice: ");
+  int choice;
+  scanf("%d",&choice);
+  switch (choice ) {
+    case 1:{
+      display(q);
+      break;
+    }
+    case 2:{
+      printf("Enter your value to be inserted: ");
+      int value;
+      scanf("%d",&value);
+      enqueue(q,value);
+      break;
+    }
+    case 3:{
+      printf("Removing Element..\n");
+      dequeue(q);
+      break;
+      }
+    case 4:{
+
+        goto exitLoop;
+        break;
+      }
+    default:{
+      printf("Enter valid choice: \n");
+    }
+  }
+  
+  char stop;
+      printf("Press any key+Enter to continue...");
+      scanf(" %c",&stop);
+  }
+  exitLoop:;
 
 }
 struct queue* createQueue(){
-  struct queue* q;
+  struct queue* q=malloc(sizeof(queue));
 
   q->rear=-1;
   q->front=-1;
   return q;
 }
-int qinsert(struct queue *q, int x,int size)
+void enqueue(struct queue *q, int x)
 {
     if(isFull(q)){
       printf("Queue Overflow..\n");
-      return -1;
+      return ;
+    }
+    else if(q->rear==MAXQUEUE-1){
+      q->rear=0;
+      q->item[q->rear]=1;
+      return;
     }
     else
     {
-      q->rear=(q->rear+1)%size;//get the rear index  
-      q->item[q->rear]=x;//insert at rear index     
+      q->item[++q->rear]=x;//insert at rear index     
       if(q->front==-1)//if first element          
         q->front=0;// make front point to 0    
-    return 1;
+    return ;
     }
 }
 bool isFull(struct queue *q){
-  if((q->rear+1==MAXQUEUE && q->front==0)||(q->rear==(q->front+1)))
+  if((q->rear+1==MAXQUEUE && q->front==0))
   {
     return true;
   }
   return false;
+}
+void display(queue *q){
+  int temp=q->front;
+  if(temp==-1){
+    printf("Empty queue\n");
+    return;
+  }
+  while(temp<=q->rear){
+    printf("%d ",q->item[temp++]);
+    if(temp==MAXQUEUE-1){
+        temp=0;
+    }
+  }
+  printf("\n");
+
+}
+void dequeue(struct queue *q){
+  q->item[q->front++]=-1;
 }
