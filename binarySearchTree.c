@@ -1,0 +1,168 @@
+#include <inttypes.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+typedef struct binaryNode{
+  int data;
+  struct binaryNode *left,*right;
+}node;
+
+node* newNode(int value);
+void insert(node** root,int value);
+node* search(node* root,int value);
+void inOrderDisp(node* root);
+void postOrderDisp(node* root);
+void preOrderDisp(node* root);
+
+int main(){
+  node* root=NULL;
+ // int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
+ //  for(int i=0;i<7;i++){
+ //    insert(&root,array[i]);
+ //  }
+  printf("Binary Search Tree implementation using Node\n");
+  
+  while(1){
+    system("clear");
+      printf("-----------------------\n");
+  printf("1.Insert\n2.Search\n3.In-order Display\n4.Pre-order Display\n5.Post-order Display\n6.Exit\n");
+  printf("-----------------------\n");
+  printf("Give your Choice: ");
+  int choice;
+  scanf("%d",&choice);
+  switch (choice ) {
+    case 1:{
+      printf("Enter your value to be inserted: ");
+      int value;
+      scanf("%d",&value);
+      insert(&root,value);
+      printf("Inserting the value\n");
+      break;
+    }
+    case 2:{
+      printf("Enter your value to be searched: ");
+      int value;
+      scanf("%d",&value);
+      printf("Search for the Element..\n");
+      search(root,value);
+      break;
+    }
+    case 3:{
+        printf("In-order traversal and display\n");
+        inOrderDisp(root);
+        printf("\n");
+        break;
+      }
+    case 4:{
+        printf("Pre-order traversal and display\n");
+        preOrderDisp(root);
+        printf("\n");
+        break;
+      }
+
+    case 5:{
+        printf("Post-order traversal and display\n");
+        postOrderDisp(root);
+        printf("\n");
+        break;
+      }
+    case 6:{
+        goto exitLoop;
+        break;
+
+      }
+    default:{
+      printf("Enter valid choice: \n");
+    }
+  }
+  
+  char stop;
+      printf("Press any key+Enter to continue...");
+      scanf(" %c",&stop);
+  }
+  exitLoop:;
+}
+node* newNode(int value){
+  node* temp=malloc(sizeof(node));
+  temp->data=value;
+  temp->left=temp->right=NULL;
+  return temp;
+}
+void insert(node** root,int data){
+    node *tempNode = ( node*) malloc(sizeof(node));
+    node *current;
+    node *parent;
+   tempNode->data = data;
+   tempNode->left = NULL;
+   tempNode->right = NULL;
+
+   //if tree is empty
+   if(*root == NULL) {
+      *root = tempNode;
+   } else {
+      current = *root;
+      parent = NULL;
+      while(1) {
+         parent = current;
+
+         //go to left of the tree
+         if(data < parent->data) {
+            current = current->left;
+
+            //insert to the left
+            if(current == NULL) {
+               parent->left = tempNode;
+               return;
+            }
+         }//go to right of the tree
+         else {
+            current = current->right;
+
+            //insert to the right
+            if(current == NULL) {
+               parent->right= tempNode;
+               return;
+            }
+         }
+      }
+   }
+}
+node* search(node* root,int value){
+  if(root==NULL){
+    printf("Value not found in tree\n");
+    return NULL;
+  }
+  if(root->data==value){
+    return root;
+  }
+  if((root->data)>value){
+    return search(root->left,value);
+  }
+  if((root->data)<value){
+    return search(root->right,value);
+  }
+  return NULL;
+}
+void inOrderDisp(node* root){
+  if(root!=NULL){
+  inOrderDisp(root->left);
+  printf("%d ",root->data);
+  inOrderDisp(root->right);
+  }
+}
+void postOrderDisp(node* root){
+  if(root!=NULL){
+  postOrderDisp(root->left);
+  postOrderDisp(root->right);
+  printf("%d ",root->data);
+  }
+}
+void preOrderDisp(node* root){
+  if(root!=NULL){
+  printf("%d ",root->data);
+  preOrderDisp(root->left);
+  preOrderDisp(root->right);
+  }
+}
