@@ -1,33 +1,35 @@
-#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+#include <math.h>
 typedef struct binaryNode{
   int data;
   struct binaryNode *left,*right;
 }node;
 
+int max(int a,int b);
 node* newNode(int value);
 void insert(node** root,int value);
 node* search(node* root,int value);
+int treeHeight(node* root);
+void printLevel(node * root,int height);
 void inOrderDisp(node* root);
 void postOrderDisp(node* root);
 void preOrderDisp(node* root);
-
+void levelOrderDisp(node* root);
 int main(){
   node* root=NULL;
- // int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
- //  for(int i=0;i<7;i++){
- //    insert(&root,array[i]);
- //  }
+ int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
+  for(int i=0;i<7;i++){
+    insert(&root,array[i]);
+  }
   printf("Binary Search Tree implementation using Node\n");
   
   while(1){
     system("clear");
       printf("-----------------------\n");
-  printf("1.Insert\n2.Search\n3.In-order Display\n4.Pre-order Display\n5.Post-order Display\n6.Exit\n");
+  printf("1.Insert\n2.Search\n3.In-order Display\n4.Pre-order Display\n5.Post-order Display\n6.Tree Height\n7.Level-order display\n8.Exit\n");
   printf("-----------------------\n");
   printf("Give your Choice: ");
   int choice;
@@ -69,9 +71,15 @@ int main(){
         break;
       }
     case 6:{
+        printf("Tree Height: %d\n",treeHeight(root));
+        break;
+    }
+    case 7:{
+        levelOrderDisp(root);
+      }
+    case 8:{
         goto exitLoop;
         break;
-
       }
     default:{
       printf("Enter valid choice: \n");
@@ -164,5 +172,48 @@ void preOrderDisp(node* root){
   printf("%d ",root->data);
   preOrderDisp(root->left);
   preOrderDisp(root->right);
+  }
+}
+int treeHeight(node* root) {
+    if (root == NULL) 
+        return 0;
+    else {
+        // Find the height of left, right subtrees
+        int leftHeight = treeHeight(root->left);
+        int rightHeight = treeHeight(root->right);
+        
+        // Find max(subtree_height) + 1 to get the height of the tree
+        return max(leftHeight, rightHeight) + 1;
+  }
+}
+int max(int a,int b ){
+  if(a>=b){
+    return a;
+  }
+  else 
+    return b;
+}
+void levelOrderDisp(node* root){
+  int height=treeHeight(root);
+  for(int i=0;i<height+1;i++){
+    // printf("Level: %d\n" 
+    for (int j = 1; j <= height-i; j++){  
+      printf ("  ");   
+    }
+    printLevel(root,i);
+    printf("\n");
+  }
+}
+void printLevel(node * root,int height){
+  if(root==NULL){
+    return;
+  }
+  if(height==0){
+    printf("%d ",root->data);
+    return;
+  }
+  else {
+    printLevel(root->left,height-1);
+    printLevel(root->right,height-1);
   }
 }
