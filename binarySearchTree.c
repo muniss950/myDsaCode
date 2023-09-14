@@ -18,6 +18,7 @@ void inOrderDisp(node* root);
 void postOrderDisp(node* root);
 void preOrderDisp(node* root);
 void levelOrderDisp(node* root);
+void deleteValue(node *root,int value);
 int main(){
   node* root=NULL;
  int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
@@ -76,6 +77,7 @@ int main(){
     }
     case 7:{
         levelOrderDisp(root);
+        break;
       }
     case 8:{
         goto exitLoop;
@@ -216,4 +218,9 @@ void printLevel(node * root,int height){
     printLevel(root->left,height-1);
     printLevel(root->right,height-1);
   }
+}
+
+void deleteValue(node *root,int value){
+  node* temp=search(root,value);
+
 }

@@ -17,7 +17,9 @@ void display(queue *q);
 
 int main(){
   queue* q=NULL;
-
+  // for(int i=1;i<5;i++){
+  //   insert(&q,i,i);
+  // }
   while(1){
     system("clear");
   printf("Ascending Priority queue implementation using Node\n");
@@ -68,22 +70,25 @@ int main(){
 
 void insert(queue** q,int x,int pty){
   queue* temp=(*q);
-  if(temp==NULL){
     queue* newNode=malloc(sizeof(queue));
     newNode->data=x;
     newNode->pty=pty;
+  if(temp==NULL){
     newNode->next=NULL;
     (*q)=newNode;
     return;
   }
-  while(temp==NULL&& pty<=temp->pty ){
+  if(pty>(temp->pty)){
+    newNode->next=temp;
+    (*q)=newNode;
+    return;
+  }
+  while(temp!=NULL&& pty<(temp->pty )){
     temp=temp->next;
   }
-    queue* newNode=malloc(sizeof(queue));
-    newNode->data=x;
-    newNode->pty=pty;
     newNode->next=temp->next;
     temp->next=newNode;
+  return;
 }
 void delete(queue** q){
   if((*q)==NULL){

@@ -23,7 +23,7 @@ int main(){
   while(1){
   system("clear");
   printf("-----------------------\n");
-  printf("Linked List Implementation\n");
+  printf("Doubly Linked List Implementation\n");
   printf("1.Display\n2.CheckEmpty\n3.InsertAtEnd\n4.InsertAtFront\n5.InsertAtPos\n");
   printf("6.DeleteAtEnd\n7.DeleteAtFront\n8.DeleteAtPos\n9.BubbleSortList\n10.ReverseList\n11.Exit");
   printf("-----------------------\n");

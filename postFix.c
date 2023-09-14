@@ -17,6 +17,9 @@ int precedence(char ch);
 void infixToPrefix(char* expression);
 bool checkIfOperand(char ch);
 bool greaterPrecedence(char a,char b);
+void evalPrefix(char *exp);
+
+
 int main(){
   struct node* top=NULL;
   printf("Infix conversions using stack\n");
@@ -24,7 +27,7 @@ int main(){
   while(1){
     system("clear");
       printf("-----------------------\n");
-  printf("1.Postfix\n2.Prefix\n3.Exit");
+  printf("1.Postfix\n2.PostFix evaluation\n3.Exit");
   printf("-----------------------\n");
   printf("Give your Choice: ");
   int choice;
@@ -34,16 +37,15 @@ int main(){
       printf("Enter your expression to be converted: ");
       char exp[MAX];
       scanf("%s",exp);
-      printf("test");
+      // printf("test");
       infixToPrefix(exp);
       break;
     }
     case 2:{
-      printf("Enter your value to be pushed: ");
-      int value;
-      scanf("%d",&value);
-      pushStack(&top,value);
-      printf("Pushing the value\n");
+      printf("Enter your expression to be evaluated: ");
+      char exp[MAX];
+      scanf("%s",exp);
+      evalPrefix(exp);
       break;
     }
     case 3:{
@@ -146,7 +148,7 @@ void infixToPrefix(char* exp){
     else{
       while(greaterPrecedence(peepStack(&top),exp[i])&& peepStack(&top)!='('){
         if(peepStack(&top)!=')')
-        postStr[j++]=peepStack(&top);
+          postStr[j++]=peepStack(&top);
         popStack(&top);
       } 
       if(peepStack(&top)!=')')
@@ -160,6 +162,9 @@ void infixToPrefix(char* exp){
       popStack(&top);
   }
   postStr[j]='\0';
-  printf("%s",postStr);
+  printf("Prefix expression: %s \n",postStr);
   return;
+}
+void evalPrefix(char *exp){
+
 }
