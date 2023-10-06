@@ -6,6 +6,7 @@ typedef struct tree{
   int info;
   int used;
 }tree;
+int size=0;
 tree t[MAX];
 void init(tree t[MAX]);
 int max(int a,int b);
@@ -21,11 +22,11 @@ void deleteValue(int value);
 void printTree();
 int main(){
   init(t);
- int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
+ int array[7] = { 27, 14, 35, 10, 19,44, 42 };
   for(int i=0;i<7;i++){
     insert(array[i]);
   }
-  printTree();
+  levelOrderDisp();
   printf("Binary Search Tree implementation using Node\n");
   
   while(1){
@@ -108,21 +109,47 @@ int max(int a,int b){
 void insert(int value){
   int i=0; 
   while(t[i].used!=0){
-    if(t[i].info>value){
+    if(i>=MAX){
+      printf("Overflow\n");
+      return;
+    }
+    if(t[i].info<value){
       i=i*2+2;
       continue;
     }
-    if(t[i].info<value){
+    if(t[i].info>value){
       i=i*2+1;
       continue;
     }
+    
   }
+  size++;
   t[i].used=1;
   t[i].info=value;
   return;
 }
 int search(int value){
-  return 0;
+  int i=0; 
+  while(t[i].used!=0){
+    if(i>=MAX){
+      printf("Item not found\n");
+      return -1;
+    }
+    if(t[i].info<value){
+      i=i*2+1;
+      continue;
+    }
+    if(t[i].info>value){
+      i=i*2+2;
+      continue;
+    }
+    if(t[i].info==value){
+      printf("Found at index %d\n",i);
+      return i;
+    }
+    
+  }
+  return -1;
 }
 int treeHeight(){
   return 0;
@@ -141,19 +168,23 @@ void preOrderDisp(){
 
 }
 void levelOrderDisp(){
+  printf("%d->\n",t[0].info);
+  int count=1;
+  for(int i=1;i<MAX;i++){
+    if(t[i].used!=0){
+      count++;
+      printf("%d ->",t[i].info);
+    }
+    if((i/2)%2==1 &&(i%2==0)){
+      printf("\n");
+    }
+    
+  }
+  printf("\n");
+
 
 }
 void deleteValue(int value){
 
 }
 
-void printTree(){
-
-  for(int i=0;i<MAX;i++){
-    if(t[i].used!=0){
-      printf("%d ->",t[i].info);
-    }
-    if()
-  }
-  printf("\n");
-}

@@ -75,7 +75,7 @@ void pushStack(struct node** top,char value){
 }
 char popStack(struct node** top){
   if(*top==NULL){
-    printf("Stack Underflow\n");
+    // printf("Stack Underflow\n");
     return '\0';
   }
   node* temp=*top;
@@ -113,7 +113,8 @@ void checkMatching(char * exp){
       printf("Not Matching\n");
       return;
     }
-    check--;
+    else
+      check--;
   }
   if(!check)
   printf("Bracket Matching\n");

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define MAXQUEUE 10
+#define MAXQUEUE 5
 typedef struct queue
 {
  int item[MAXQUEUE];
@@ -14,6 +14,9 @@ void display(queue *q);
 void dequeue(struct queue *q);
 int main(){
   queue* q=createQueue();
+  for(int i=0;i<5;i++){
+    enqueue(q,i);
+  }
   while(1){
     system("clear");
       printf("Double Ended Queue implementation using doubly linked list \n");
@@ -72,7 +75,7 @@ void enqueue(struct queue *q, int x)
     }
     else if(q->rear==MAXQUEUE-1){
       q->rear=0;
-      q->item[q->rear]=1;
+      q->item[q->rear]=x;
       return;
     }
     else
@@ -84,7 +87,7 @@ void enqueue(struct queue *q, int x)
     }
 }
 bool isFull(struct queue *q){
-  if((q->rear+1==MAXQUEUE && q->front==0))
+  if((q->rear+1==MAXQUEUE && q->front==0)||(q->rear+1==q->front && q->front>0))
   {
     return true;
   }
@@ -96,15 +99,21 @@ void display(queue *q){
     printf("Empty queue\n");
     return;
   }
-  while(temp<=q->rear){
-    printf("%d ",q->item[temp++]);
-    if(temp==MAXQUEUE-1){
+  printf("%d %d\n",q->front,q->rear);
+  do{
+    printf("%d ",q->item[temp]);
+    if(temp==q->rear){
+      break;
+    }
+    if((temp++)==MAXQUEUE-1){
         temp=0;
     }
-  }
+  }while(true);
   printf("\n");
 
 }
 void dequeue(struct queue *q){
   q->item[q->front++]=-1;
+  if(q->front==MAXQUEUE-1)
+    q->front=q->rear=0;
 }

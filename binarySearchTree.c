@@ -21,7 +21,7 @@ void levelOrderDisp(node* root);
 void deleteValue(node *root,int value);
 int main(){
   node* root=NULL;
- int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
+  int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
   for(int i=0;i<7;i++){
     insert(&root,array[i]);
   }
@@ -29,8 +29,8 @@ int main(){
   
   while(1){
     system("clear");
-      printf("-----------------------\n");
-  printf("1.Insert\n2.Search\n3.In-order Display\n4.Pre-order Display\n5.Post-order Display\n6.Tree Height\n7.Level-order display\n8.Exit\n");
+    printf("-----------------------\n");
+    printf("1.Insert\n2.Search\n3.In-order Display\n4.Pre-order Display\n5.Post-order Display\n6.Tree Height\n7.Level-order display\n8.Exit\n");
   printf("-----------------------\n");
   printf("Give your Choice: ");
   int choice;

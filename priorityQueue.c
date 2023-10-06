@@ -17,9 +17,9 @@ void display(queue *q);
 
 int main(){
   queue* q=NULL;
-  // for(int i=1;i<5;i++){
-  //   insert(&q,i,i);
-  // }
+  for(int i=1;i<5;i++){
+    insert(&q,i,5+i);
+  }
   while(1){
     system("clear");
   printf("Ascending Priority queue implementation using Node\n");
