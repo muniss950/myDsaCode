@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #define MAX 50
 
@@ -9,6 +10,11 @@ int main(){
   for(int i=0;i<n;i++){
     scanf("%d",&a[i]);
   }
+  printf("Before heapification:\n");
+  for(int i=0;i<n;i++){
+    printf("%d ",a[i]);
+  }
+  printf("\n");
   //Heapify
   for(int i=0;i<n;i++){
     elt=a[i];
@@ -21,4 +27,9 @@ int main(){
     }
     a[c]=elt;
   }
+  printf("After heapification:\n");
+  for(int i=0;i<n;i++){
+    printf("%d ",a[i]);
+  }
 }
+

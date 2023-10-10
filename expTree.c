@@ -6,11 +6,8 @@
 typedef struct binaryNode{
   int data;
   struct binaryNode *left,*right;
-  int rthread; 
 }node;
 
-void setLeft(node* q,int e);
-void setRight(node* q,int e);
 int max(int a,int b);
 node* newNode(int value);
 void insert(node** root,int value);
@@ -22,15 +19,8 @@ void postOrderDisp(node* root);
 void preOrderDisp(node* root);
 void levelOrderDisp(node* root);
 void deleteValue(node *root,int value);
-
 int main(){
   node* root=NULL;
-  int array[7] = { 27, 14, 35, 10, 19, 31, 42 };
-  for(int i=0;i<7;i++){
-    insert(&root,array[i]);
-  }
-  printf("Right-in ThreadedBinary Search Tree implementation using Node\n");
-  
   while(1){
     system("clear");
     printf("-----------------------\n");
@@ -102,58 +92,43 @@ node* newNode(int value){
   node* temp=malloc(sizeof(node));
   temp->data=value;
   temp->left=temp->right=NULL;
-  temp->rthread=1;
   return temp;
 }
-
-void setLeft(node* q,int data){
-  node* temp=newNode(data);
-  q->left=temp;
-  temp->right=q;
-}
-
-void setRight(node* q,int data){
-  node* temp=newNode(data);
-  temp->right=q->right;
-  q->right=temp;
-  q->rthread=0;
-}
-
 void insert(node** root,int data){
+    node *tempNode = ( node*) malloc(sizeof(node));
     node *current;
     node *parent;
+   tempNode->data = data;
+   tempNode->left = NULL;
+   tempNode->right = NULL;
 
    //if tree is empty
    if(*root == NULL) {
-      *root=newNode(data);
-      return;
+      *root = tempNode;
    } else {
       current = *root;
       parent = NULL;
       while(1) {
-            
-          printf("%d",data);
          parent = current;
 
          //go to left of the tree
          if(data < parent->data) {
             current = current->left;
-            printf("less");
+
             //insert to the left
             if(current == NULL) {
-              setLeft(parent,data);
-              return;
+               parent->left = tempNode;
+               return;
             }
          }//go to right of the tree
          else {
-            printf("more");
+            current = current->right;
 
             //insert to the right
-            if(current->rthread==1) {
-               setRight(parent,data);
+            if(current == NULL) {
+               parent->right= tempNode;
                return;
             }
-            current=current->right;
          }
       }
    }
@@ -194,51 +169,4 @@ void preOrderDisp(node* root){
   preOrderDisp(root->left);
   preOrderDisp(root->right);
   }
-}
-int treeHeight(node* root) {
-    if (root == NULL) 
-        return 0;
-    else {
-        // Find the height of left, right subtrees
-        int leftHeight = treeHeight(root->left);
-        int rightHeight = treeHeight(root->right);
-        
-        // Find max(subtree_height) + 1 to get the height of the tree
-        return max(leftHeight, rightHeight) + 1;
-  }
-}
-int max(int a,int b ){
-  if(a>=b){
-    return a;
-  }
-  else 
-    return b;
-}
-void levelOrderDisp(node* root){
-  int height=treeHeight(root);
-  for(int i=0;i<height+1;i++){
-    // printf("Level: %d\n" 
-    for (int j = 1; j <= height-i; j++){  
-      printf ("  ");   
-    }
-    printLevel(root,i);
-    printf("\n");
-  }
-}
-void printLevel(node * root,int height){
-  if(root==NULL){
-    return;
-  }
-  if(height==0){
-    printf("%d ",root->data);
-    return;
-  }
-  else {
-    printLevel(root->left,height-1);
-    printLevel(root->right,height-1);
-  }
-}
-
-void deleteValue(node *root,int value){
-  node* temp=search(root,value);
 }
