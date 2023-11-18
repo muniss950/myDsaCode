@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -17,6 +18,12 @@ struct Node* createNode(char data) {
     return newNode;
 }
 
+int isoperand(char a){
+  if(a=='+' || a=='-' || a=='/' || a=='*'){
+    return 1;
+  }
+  return 0;
+}
 // Function to build an expression tree from a postfix expression
 struct Node* buildExpressionTree(char postfix[]) {
     struct Node* stack[100];  // Assuming the postfix expression is not too long
@@ -25,7 +32,7 @@ struct Node* buildExpressionTree(char postfix[]) {
     for (int i = 0; postfix[i] != '\0'; ++i) {
         struct Node* newNode = createNode(postfix[i]);
 
-        if (isdigit(postfix[i])) {
+        if (!isoperand(postfix[i])) {
             stack[++top] = newNode;
         } else {
             // Pop two operands from the stack
@@ -43,32 +50,10 @@ struct Node* buildExpressionTree(char postfix[]) {
     return stack[top];
 }
 
-// Function to evaluate the expression tree
-int evaluateExpressionTree(struct Node* root) {
-    if (root == NULL) {
-        return 0;
-    }
-
-    if (isdigit(root->data)) {
-        return root->data - '0';
-    }
-
-    int leftValue = evaluateExpressionTree(root->left);
-    int rightValue = evaluateExpressionTree(root->right);
-
-    switch (root->data) {
-        case '+': return leftValue + rightValue;
-        case '-': return leftValue - rightValue;
-        case '*': return leftValue * rightValue;
-        case '/': return leftValue / rightValue;
-        default: return 0;
-    }
-}
-
 // Function to print the infix expression by inorder traversal of the expression tree
 void printInfix(struct Node* root) {
     if (root != NULL) {
-        if (isdigit(root->data)) {
+        if (!isoperand(root->data)) {
             printf("%c", root->data);
         } else {
             printf("(");
@@ -81,14 +66,13 @@ void printInfix(struct Node* root) {
 }
 
 int main() {
-    char postfix[] = "34*2+";
+    char postfix[] = "ab*c+";
 
     struct Node* root = buildExpressionTree(postfix);
 
     printf("Infix Expression: ");
     printInfix(root);
 
-    printf("\nResult: %d\n", evaluateExpressionTree(root));
 
     return 0;
 }
