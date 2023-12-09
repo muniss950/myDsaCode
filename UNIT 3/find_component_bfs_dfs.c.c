@@ -1,5 +1,6 @@
  //program to return the no of components of disconnected graph
  #include<stdio.h>
+
  int visit[100];
  void creategraph();
  void dfs(int);
@@ -89,25 +90,4 @@ void  dfs(int v)
 		  }
 	  }
   }*/
-
-
-
-
-
-
-
-
-
-
- 
-
-  
-
-   
-
-      
-
-     
-
-
 

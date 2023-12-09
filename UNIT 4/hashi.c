@@ -93,6 +93,7 @@ void  delete_from_hash(struct hash * ht,int size,int key)
  
 void insert_to_hash(struct hash *ht, int size, int key, char*name)
 {
+  int index;
 	struct node *temp;
 	temp=malloc(sizeof(struct node));
 	temp->key=key;
@@ -112,7 +113,7 @@ void display(struct hash* ht, int size)
 }
 
 
-void search_in_hash(struct hash *ht,int sz,int key)
+void search_in_hash(struct hash *ht,int size,int key)
 {
     struct node *temp;
 	int index;
@@ -127,12 +128,11 @@ void search_in_hash(struct hash *ht,int sz,int key)
 	
 	if(temp!=NULL)
 	{
-		printf
+		// printf
 	}
 	
 	else
 		printf("not found\n");
-}
 }
 
 

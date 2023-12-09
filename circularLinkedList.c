@@ -15,6 +15,7 @@ void  deleteAtFront(N** last);
 N* deleteAtPos(N** last,int pos);
 void bubbleSortList(N** last);
 void reverseList(N** last);
+
 int main(){
   N* last=NULL;
   while(1){
@@ -122,6 +123,7 @@ int main(){
   }
   exitLoop:;
 }
+
 int checkEmpty(N** last){
   if((*last)==NULL){
     return 1;

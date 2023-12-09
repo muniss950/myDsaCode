@@ -147,7 +147,7 @@ struct trienode *getnode()
 	temp=(struct trienode*)malloc(sizeof(struct trienode));
 	for(i=0;i<256;i++)
 		temp->child[i]=NULL;
-		temp->endofword=0;
+	temp->endofword=0;
 	return temp;
 }
  void display(struct trienode *curr)

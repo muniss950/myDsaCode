@@ -122,6 +122,3 @@ void display(struct element *ht, int size)
       printf("\n");
     }
   }  
-
-
-	

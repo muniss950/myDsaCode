@@ -25,7 +25,7 @@ void insert(int i, int j);
 
 int main()
 {
-	int v;
+	int v,n;
 
 	printf("Enter the no of verticies...\n");
 	scanf("%d",&n);

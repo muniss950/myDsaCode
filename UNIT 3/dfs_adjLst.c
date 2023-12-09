@@ -60,7 +60,7 @@ void dfs(NODE *A[MAX],int visited[MAX],int src)
 	while(p!=NULL)
 	{
 		if(visited[p->info]==0)
-			dfs(V,visited,p->info);
+			dfs(A,visited,p->info);
 		p=p->next;
 	}
 }

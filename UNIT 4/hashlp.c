@@ -2,16 +2,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 struct element
 {
    int key;
    char name[100];
    int mark;
 };
+
 void display(struct element *, int);
 void insert_to_hash(struct element*, int, int, char*, int*);
 void delete_from_hash(struct element *,int ,int ,int *);
 void search_in_hash(struct element *,int ,int ,int );
+
 int main()
 {
   struct element *hashtable;
@@ -153,4 +156,3 @@ void insert_to_hash(struct element* ht, int size, int key, char *name, int *coun
 	
 	return;
 }
-	
