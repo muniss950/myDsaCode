@@ -106,6 +106,7 @@ int max(int a,int b){
     return a;
   return b;
 }
+
 void insert(int value){
   int i=0; 
   while(t[i].used!=0){
@@ -128,6 +129,7 @@ void insert(int value){
   t[i].info=value;
   return;
 }
+
 int search(int value){
   int i=0; 
   while(t[i].used!=0){
@@ -151,6 +153,7 @@ int search(int value){
   }
   return -1;
 }
+
 int treeHeight(){
   return 0;
 

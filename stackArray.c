@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 1000
+
 int stackArray[MAX];
 int top=-1;
 

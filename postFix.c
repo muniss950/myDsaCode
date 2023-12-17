@@ -159,12 +159,13 @@ void infixToPrefix(char* exp){
     if(peepStack(&top)!=')' && peepStack(&top)!='('){
       postStr[j++]=peepStack(&top);
     }
-      popStack(&top);
+    popStack(&top);
   }
   postStr[j]='\0';
   printf("Prefix expression: %s \n",postStr);
   return;
 }
+
 void evalPrefix(char *exp){
 
 }

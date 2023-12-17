@@ -44,6 +44,7 @@ void addEdge(N* A[MAX],int src,int dest){
   newNode->next=A[src];
   A[src]=newNode;
 }
+
 void bfs(N* A[MAX],int visited[MAX],int src){
   int q[MAX];// declaring queue
   int f=0,r=-1;//front and rear

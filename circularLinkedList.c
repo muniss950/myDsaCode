@@ -161,6 +161,7 @@ void  insertAtFront(N** last,int value){
   }
 
 }
+
 void insertAtEnd(N** last,int value){
   if(*last==NULL){
     N* temp=malloc(sizeof(N));
@@ -175,7 +176,6 @@ void insertAtEnd(N** last,int value){
     temp->next=(*last)->next;
     (*last)->next=temp;
     *last=temp;
-    
   }  
 }
 
